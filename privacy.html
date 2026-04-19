@@ -1,41 +1,76 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Política de Privacidade - Canvas Speed Controller Plus</title>
-  <meta name="description" content="Política de privacidade da extensão Canvas Speed Controller Plus">
-  <link rel="icon" type="image/png" href="./assets/favicon.png">
-  <link rel="stylesheet" href="./style.css">
-</head>
-<body>
 
-  <!-- Navigation -->
-  <nav class="nav">
-    <div class="container nav-container">
-      <a href="./index.html" class="logo-link">
-        <img src="./assets/logo.png" alt="Logo" class="nav-logo">
-        <span class="nav-title">Canvas Speed</span>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Política de Privacidade · Canvas Speed</title>
+  <meta name="description" content="Política de privacidade da extensão Canvas Speed" />
+  <link rel="icon" type="image/png" href="./assets/favicon.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+
+<body class="bg-brand-dark text-neutral-200 font-sans antialiased overflow-x-hidden">
+
+  <!-- Background effects -->
+  <div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+    <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-brand-dark/80"></div>
+  </div>
+
+  <!-- Navbar -->
+  <div class="fixed top-0 left-0 w-full flex justify-center z-50 pt-4 md:pt-6 px-4 pointer-events-none">
+    <nav class="nav-glass pointer-events-auto flex items-center justify-between w-full max-w-6xl h-16 px-5 md:px-8 rounded-full">
+      <a href="./index.html" class="flex items-center gap-3 group">
+        <div class="w-9 h-9 rounded-lg overflow-hidden border border-white/10 group-hover:border-purple-500/50 transition-all">
+          <img src="./assets/logo.png" alt="Canvas Speed" class="w-full h-full object-cover" />
+        </div>
+        <span class="font-logo text-xs md:text-sm font-bold text-white tracking-[0.25em] hidden sm:block">
+          CANVAS SPEED
+        </span>
       </a>
-      <div class="nav-links">
-        <a href="./index.html#features">Recursos</a>
-        <a href="./index.html#engines">Compatibilidade</a>
-        <a href="./index.html#how">Como usar</a>
-        <a href="./privacy.html">Privacidade</a>
-        <a href="https://discord.gg/b9ZJrypBra" target="_blank" class="discord-btn">Discord</a>
+
+      <div class="hidden md:flex items-center justify-center flex-1 mx-4 space-x-1">
+        <a href="./index.html#features" class="nav-link">RECURSOS</a>
+        <a href="./index.html#engines" class="nav-link">ENGINES</a>
+        <a href="./index.html#how" class="nav-link">COMO USAR</a>
+        <a href="./index.html#install" class="nav-link">INSTALAR</a>
+        <a href="./privacy.html" class="nav-link" style="color: #fff; background: rgba(255,255,255,0.05);">PRIVACIDADE</a>
       </div>
-    </div>
-  </nav>
+
+      <a href="https://discord.gg/b9ZJrypBra" target="_blank" rel="noopener" class="discord-pill">
+        <svg width="16" height="16" viewBox="0 0 127.14 96.36" fill="currentColor">
+          <path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.71,32.65-1.82,56.6.4,80.21a105.73,105.73,0,0,0,32.17,16.15,77.7,77.7,0,0,0,6.89-11.11,68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1,105.25,105.25,0,0,0,32.19-16.14c.4-23.61-4.13-47.56-20.79-72.14ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S54,46,53.89,53,48.84,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5-12.74,11.44-12.74S96.23,46,96.12,53,91.08,65.69,84.69,65.69Z" />
+        </svg>
+        <span class="hidden sm:inline">DISCORD</span>
+      </a>
+    </nav>
+  </div>
 
   <div class="privacy-page">
-    <a href="./index.html" class="back-link">← Voltar para o início</a>
+    <a href="./index.html" class="back-link">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      VOLTAR
+    </a>
 
-    <h1>Política de Privacidade</h1>
-    <p class="date">Última atualização: 19 de abril de 2026</p>
+    <div class="inline-block px-3 py-1 rounded-full border border-cyan-500/20 bg-cyan-500/5 text-cyan-400 text-[10px] font-bold tracking-[0.25em] uppercase mb-6">
+      Privacidade
+    </div>
+
+    <h1>Política de <span class="text-gradient">Privacidade</span></h1>
+    <p class="date">ÚLTIMA ATUALIZAÇÃO · 19 DE ABRIL DE 2026</p>
 
     <h2>Resumo</h2>
     <p>
-      A extensão <strong>Canvas Speed Controller Plus</strong> <strong>NÃO</strong> coleta, armazena ou transmite nenhum tipo de dado pessoal dos usuários. Toda a funcionalidade roda 100% localmente no navegador do usuário.
+      A extensão <strong>Canvas Speed</strong> <strong>NÃO</strong> coleta, armazena ou transmite nenhum tipo de dado pessoal dos usuários. Toda a funcionalidade roda 100% localmente no navegador do usuário.
     </p>
 
     <h2>Dados que NÃO são coletados</h2>
@@ -61,7 +96,7 @@
       Esses dados <strong>NUNCA</strong> são enviados para servidores externos, terceiros ou qualquer outro lugar fora do dispositivo do usuário. O usuário pode apagá-los a qualquer momento removendo a extensão.
     </p>
 
-    <h2>Permissões solicitadas e justificativas</h2>
+    <h2>Permissões solicitadas</h2>
     <ul>
       <li><strong>activeTab:</strong> Necessária para injetar o script de controle de velocidade na aba ativa quando o usuário clica na extensão.</li>
       <li><strong>scripting:</strong> Usada para injetar o código de controle de velocidade no contexto da página.</li>
@@ -69,7 +104,7 @@
       <li><strong>host_permissions (&lt;all_urls&gt;):</strong> Necessária pois o usuário pode querer controlar a velocidade de animações em qualquer site com conteúdo HTML5/canvas.</li>
     </ul>
 
-    <h2>Compartilhamento de Dados</h2>
+    <h2>Compartilhamento</h2>
     <p>
       Nenhum dado é compartilhado, vendido ou transferido a terceiros, pois nenhum dado é coletado.
     </p>
@@ -80,11 +115,9 @@
     </p>
 
     <h2>Contato</h2>
-    <p>
-      Para dúvidas sobre esta política:
-    </p>
+    <p>Para dúvidas sobre esta política:</p>
     <ul>
-      <li>Discord: <a href="https://discord.gg/b9ZJrypBra" style="color: var(--primary);">discord.gg/b9ZJrypBra</a></li>
+      <li>Discord: <a href="https://discord.gg/b9ZJrypBra" target="_blank" rel="noopener">discord.gg/b9ZJrypBra</a></li>
       <li>Desenvolvedor: markizin</li>
     </ul>
 
@@ -95,38 +128,48 @@
   </div>
 
   <!-- Footer -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-brand">
-          <img src="./assets/logo.png" alt="Logo" class="footer-logo">
-          <h3>Canvas Speed Controller Plus</h3>
-          <p>Controle a velocidade de animações HTML5 diretamente no navegador</p>
+  <footer class="relative z-10 border-t border-white/[0.06] px-6 pt-16 pb-8 mt-20">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+        <div class="md:col-span-2">
+          <div class="flex items-center gap-3 mb-4">
+            <img src="./assets/logo.png" alt="Canvas Speed" class="w-10 h-10 rounded-lg" />
+            <span class="font-logo text-sm font-bold text-white tracking-[0.25em]">CANVAS SPEED</span>
+          </div>
+          <p class="text-white/40 text-sm font-light max-w-sm leading-relaxed">
+            Controle a velocidade de animações em jogos HTML5 e conteúdo canvas diretamente no seu navegador.
+          </p>
         </div>
 
-        <div class="footer-col">
-          <h4>Links</h4>
-          <a href="./index.html#features">Recursos</a>
-          <a href="./index.html#engines">Compatibilidade</a>
-          <a href="./index.html#how">Como usar</a>
-          <a href="./index.html#install">Instalação</a>
+        <div>
+          <h4 class="text-[10px] font-bold text-white/90 tracking-[0.25em] uppercase mb-4">Produto</h4>
+          <div class="space-y-2">
+            <a href="./index.html#features" class="footer-link">Recursos</a>
+            <a href="./index.html#engines" class="footer-link">Engines</a>
+            <a href="./index.html#how" class="footer-link">Como usar</a>
+            <a href="./index.html#install" class="footer-link">Instalação</a>
+          </div>
         </div>
 
-        <div class="footer-col">
-          <h4>Suporte</h4>
-          <a href="https://discord.gg/b9ZJrypBra" target="_blank">Discord</a>
-          <a href="https://github.com/MarcBuzatto/canvas-speed-controller" target="_blank">GitHub</a>
-          <a href="./privacy.html">Política de Privacidade</a>
+        <div>
+          <h4 class="text-[10px] font-bold text-white/90 tracking-[0.25em] uppercase mb-4">Suporte</h4>
+          <div class="space-y-2">
+            <a href="https://discord.gg/b9ZJrypBra" target="_blank" rel="noopener" class="footer-link">Discord</a>
+            <a href="https://github.com/MarcBuzatto/canvas-speed-controller-plus" target="_blank" rel="noopener" class="footer-link">GitHub</a>
+            <a href="./privacy.html" class="footer-link">Privacidade</a>
+          </div>
         </div>
+      </div>
 
-        <div class="footer-col">
-          <h4>Desenvolvido por</h4>
-          <p class="dev-name">markizin</p>
-          <p class="footer-small">© 2026 · Todos os direitos reservados</p>
-        </div>
+      <div class="border-t border-white/[0.06] pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+        <p class="text-white/30 text-xs tracking-wider">
+          DESENVOLVIDO POR <span class="text-gradient font-bold">MARKIZIN</span>
+        </p>
+        <p class="text-white/30 text-xs">© 2026 Canvas Speed · Todos os direitos reservados</p>
       </div>
     </div>
   </footer>
 
 </body>
+
 </html>

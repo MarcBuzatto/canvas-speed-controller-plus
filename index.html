@@ -1,317 +1,462 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Canvas Speed Controller Plus - Controle a velocidade de animações em jogos HTML5 e conteúdo canvas diretamente no seu navegador">
-  <meta name="keywords" content="chrome extension, canvas, html5, animation speed, speed controller, web game, extensão chrome">
-  <meta name="author" content="markizin">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Canvas Speed | Controle de velocidade para animações HTML5</title>
 
-  <!-- Open Graph -->
-  <meta property="og:title" content="Canvas Speed Controller Plus">
-  <meta property="og:description" content="Controle a velocidade de animações em jogos HTML5 e conteúdo canvas">
-  <meta property="og:image" content="./assets/logo.png">
-  <meta property="og:type" content="website">
+  <meta name="description"
+    content="Extensão para Chrome que controla a velocidade de animações em jogos HTML5 e conteúdo canvas. Leve, privada e poderosa." />
+  <meta name="keywords"
+    content="Canvas Speed, Chrome Extension, HTML5, Animation Speed, Canvas, Cocos, PixiJS, Phaser" />
+  <meta name="author" content="markizin" />
+  <meta property="og:title" content="Canvas Speed | Controle de velocidade HTML5" />
+  <meta property="og:description" content="Controle a velocidade de animações em jogos HTML5 e canvas diretamente no Chrome." />
+  <meta property="og:image" content="./assets/logo.png" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
 
-  <title>Canvas Speed Controller Plus - Controle velocidade de animações HTML5</title>
-  <link rel="icon" type="image/png" href="./assets/favicon.png">
-  <link rel="stylesheet" href="./style.css">
+  <link rel="icon" type="image/png" href="./assets/favicon.png" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Syncopate:wght@400;700&display=swap"
+    rel="stylesheet">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              dark: '#050505',
+              surface: '#0a0a0a',
+              muted: '#a3a3a3',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            logo: ['Syncopate', 'sans-serif'],
+          },
+          animation: {
+            'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'float': 'float 6s ease-in-out infinite',
+            'spin-slow': 'spin 12s linear infinite',
+            'fade-in': 'fadeIn 0.8s ease-out forwards',
+            'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+            'blob': 'blob 20s ease-in-out infinite',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-20px)' },
+            },
+            fadeIn: {
+              '0%': { opacity: 0 },
+              '100%': { opacity: 1 },
+            },
+            fadeInUp: {
+              '0%': { opacity: 0, transform: 'translateY(20px)' },
+              '100%': { opacity: 1, transform: 'translateY(0)' },
+            },
+            blob: {
+              '0%, 100%': { transform: 'translate(0, 0) scale(1)' },
+              '25%': { transform: 'translate(30px, -20px) scale(1.1)' },
+              '50%': { transform: 'translate(-20px, 30px) scale(0.9)' },
+              '75%': { transform: 'translate(20px, 20px) scale(1.05)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <link rel="stylesheet" href="./style.css" />
 </head>
-<body>
 
-  <!-- Navigation -->
-  <nav class="nav">
-    <div class="container nav-container">
-      <a href="#" class="logo-link">
-        <img src="./assets/logo.png" alt="Logo" class="nav-logo">
-        <span class="nav-title">Canvas Speed</span>
+<body class="bg-brand-dark text-neutral-200 font-sans antialiased overflow-x-hidden">
+
+  <!-- Background effects (liquid blobs) -->
+  <div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+    <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-brand-dark/80"></div>
+  </div>
+
+  <!-- ===== NAVBAR ===== -->
+  <div class="fixed top-0 left-0 w-full flex justify-center z-50 pt-4 md:pt-6 px-4 pointer-events-none">
+    <nav class="nav-glass pointer-events-auto flex items-center justify-between w-full max-w-6xl h-16 px-5 md:px-8 rounded-full">
+      <a href="./index.html" class="flex items-center gap-3 group">
+        <div class="w-9 h-9 rounded-lg flex items-center justify-center overflow-hidden border border-white/10 group-hover:border-purple-500/50 transition-all">
+          <img src="./assets/logo.png" alt="Canvas Speed" class="w-full h-full object-cover" />
+        </div>
+        <span class="font-logo text-xs md:text-sm font-bold text-white tracking-[0.25em] hidden sm:block">
+          CANVAS SPEED
+        </span>
       </a>
-      <div class="nav-links">
-        <a href="#features">Recursos</a>
-        <a href="#engines">Compatibilidade</a>
-        <a href="#how">Como usar</a>
-        <a href="./privacy.html">Privacidade</a>
-        <a href="https://discord.gg/b9ZJrypBra" target="_blank" class="discord-btn">Discord</a>
+
+      <div class="hidden md:flex items-center justify-center flex-1 mx-4 space-x-1">
+        <a href="#features" class="nav-link">RECURSOS</a>
+        <a href="#engines" class="nav-link">ENGINES</a>
+        <a href="#how" class="nav-link">COMO USAR</a>
+        <a href="#install" class="nav-link">INSTALAR</a>
+        <a href="./privacy.html" class="nav-link">PRIVACIDADE</a>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <a href="https://discord.gg/b9ZJrypBra" target="_blank" rel="noopener" class="discord-pill" aria-label="Discord">
+          <svg width="16" height="16" viewBox="0 0 127.14 96.36" fill="currentColor">
+            <path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.71,32.65-1.82,56.6.4,80.21a105.73,105.73,0,0,0,32.17,16.15,77.7,77.7,0,0,0,6.89-11.11,68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1,105.25,105.25,0,0,0,32.19-16.14c.4-23.61-4.13-47.56-20.79-72.14ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S54,46,53.89,53,48.84,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5-12.74,11.44-12.74S96.23,46,96.12,53,91.08,65.69,84.69,65.69Z" />
+          </svg>
+          <span class="hidden sm:inline">DISCORD</span>
+        </a>
+      </div>
+    </nav>
+  </div>
+
+  <!-- ===== HERO ===== -->
+  <section class="relative z-10 min-h-screen flex flex-col items-center justify-center px-6 pt-32 pb-20">
+    <div class="max-w-4xl mx-auto text-center">
+      <!-- Status pill -->
+      <div class="inline-flex items-center gap-3 px-5 py-2 rounded-full border border-white/10 bg-white/[0.03] backdrop-blur-md mb-10 animate-fade-in">
+        <div class="w-1.5 h-1.5 bg-purple-400 rounded-full animate-pulse"></div>
+        <span class="text-[10px] font-bold tracking-[0.25em] uppercase text-white/70">VERSÃO 3.0 · DISPONÍVEL</span>
+      </div>
+
+      <!-- Hero headline -->
+      <h1 class="font-sans font-bold text-white tracking-tight leading-[1.05] mb-8 animate-fade-in-up text-5xl sm:text-6xl md:text-7xl lg:text-8xl">
+        Velocidade<br>
+        <span class="text-gradient">redefinida.</span>
+      </h1>
+
+      <p class="text-white/50 text-sm md:text-base max-w-xl mx-auto mb-12 font-light leading-relaxed animate-fade-in-up" style="animation-delay: 0.2s; animation-fill-mode: both;">
+        Extensão para Chrome que controla a velocidade de animações em jogos HTML5
+        e conteúdo canvas. Detecta automaticamente engines como Cocos, PixiJS, Phaser e Spine.
+      </p>
+
+      <!-- CTAs -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20 animate-fade-in-up" style="animation-delay: 0.4s; animation-fill-mode: both;">
+        <a href="#install" class="btn-primary">
+          INSTALAR AGORA
+        </a>
+        <a href="#how" class="btn-secondary">
+          COMO FUNCIONA
+        </a>
+      </div>
+
+      <!-- Stats strip -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto pt-12 border-t border-white/[0.06] animate-fade-in" style="animation-delay: 0.6s; animation-fill-mode: both;">
+        <div>
+          <div class="text-2xl md:text-3xl font-bold text-white">27<span class="text-white/40 text-lg">KB</span></div>
+          <div class="text-[10px] font-bold tracking-widest uppercase text-white/40 mt-1">Tamanho total</div>
+        </div>
+        <div>
+          <div class="text-2xl md:text-3xl font-bold text-white">10<span class="text-white/40 text-lg">x</span></div>
+          <div class="text-[10px] font-bold tracking-widest uppercase text-white/40 mt-1">Velocidade máx</div>
+        </div>
+        <div>
+          <div class="text-2xl md:text-3xl font-bold text-white">7<span class="text-white/40 text-lg">+</span></div>
+          <div class="text-[10px] font-bold tracking-widest uppercase text-white/40 mt-1">Engines</div>
+        </div>
+        <div>
+          <div class="text-2xl md:text-3xl font-bold text-white">0<span class="text-white/40 text-lg"> dados</span></div>
+          <div class="text-[10px] font-bold tracking-widest uppercase text-white/40 mt-1">Coletados</div>
+        </div>
       </div>
     </div>
-  </nav>
+  </section>
 
-  <!-- Hero -->
-  <section class="hero">
-    <div class="container">
-      <div class="hero-content">
-        <div class="hero-badge">⚡ Versão 3.0 disponível</div>
-        <h1>Controle a velocidade de<br><span class="gradient-text">animações HTML5</span></h1>
-        <p class="hero-subtitle">
-          Extensão para Chrome que permite acelerar ou desacelerar animações em jogos HTML5 e conteúdo canvas diretamente no seu navegador. Leve, privada e poderosa.
+  <!-- ===== FEATURES ===== -->
+  <section id="features" class="relative z-10 py-32 px-6">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center max-w-2xl mx-auto mb-20">
+        <div class="inline-block px-3 py-1 rounded-full border border-purple-500/20 bg-purple-500/5 text-purple-400 text-[10px] font-bold tracking-[0.25em] uppercase mb-4">
+          Recursos
+        </div>
+        <h2 class="font-sans font-bold text-white text-4xl md:text-5xl tracking-tight leading-tight mb-4">
+          Ferramenta <span class="text-gradient">completa</span>.<br>
+          Interface minimalista.
+        </h2>
+        <p class="text-white/50 text-sm md:text-base font-light">
+          Tudo que você precisa para controlar animações HTML5 com precisão.
         </p>
-
-        <div class="hero-cta">
-          <a href="#install" class="btn-primary">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
-            Instalar Agora
-          </a>
-          <a href="#how" class="btn-secondary">Como funciona</a>
-        </div>
-
-        <div class="hero-stats">
-          <div class="stat">
-            <div class="stat-value">27KB</div>
-            <div class="stat-label">Tamanho total</div>
-          </div>
-          <div class="stat">
-            <div class="stat-value">0.5x-10x</div>
-            <div class="stat-label">Range de velocidade</div>
-          </div>
-          <div class="stat">
-            <div class="stat-value">100%</div>
-            <div class="stat-label">Privado e local</div>
-          </div>
-          <div class="stat">
-            <div class="stat-value">7+</div>
-            <div class="stat-label">Engines suportados</div>
-          </div>
-        </div>
       </div>
 
-      <div class="hero-visual">
-        <div class="logo-container">
-          <img src="./assets/logo.png" alt="Canvas Speed Controller Plus" class="hero-logo">
-          <div class="logo-glow"></div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div class="feature-card">
+          <div class="feature-icon-wrap">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+          </div>
+          <h3>Velocidade 0.5x a 10x</h3>
+          <p>Slider preciso + 8 presets rápidos (1x, 1.5x, 2x, 2.5x, 3x, 5x, 7x, 10x) para ajustes instantâneos.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-wrap">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+          </div>
+          <h3>Auto-Skip Animações</h3>
+          <p>Modo opcional que clica automaticamente no canvas para avançar conteúdo e pular animações longas.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-wrap">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+          </div>
+          <h3>Estado Persistente</h3>
+          <p>Preferências salvas automaticamente via chrome.storage.local. Seus ajustes voltam a cada sessão.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-wrap">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+          </div>
+          <h3>Privacidade Total</h3>
+          <p>Zero coleta de dados, zero rastreamento, zero servidores externos. Tudo roda localmente no seu navegador.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-wrap">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+          </div>
+          <h3>Ultra Leve</h3>
+          <p>Apenas 27KB de código. Sem dependências externas, sem anúncios, sem rastreadores.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-wrap">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+          </div>
+          <h3>Detecção Automática</h3>
+          <p>Identifica e controla engines: Cocos, PixiJS, Phaser, Spine, CreateJS, Three.js e outros via timeScale.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Features -->
-  <section id="features" class="section">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-tag">Recursos</div>
-        <h2>Tudo que você precisa para controlar animações</h2>
-        <p>Ferramenta completa, leve e focada em experiência do usuário</p>
+  <!-- ===== ENGINES ===== -->
+  <section id="engines" class="relative z-10 py-32 px-6">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center max-w-2xl mx-auto mb-16">
+        <div class="inline-block px-3 py-1 rounded-full border border-cyan-500/20 bg-cyan-500/5 text-cyan-400 text-[10px] font-bold tracking-[0.25em] uppercase mb-4">
+          Compatibilidade
+        </div>
+        <h2 class="font-sans font-bold text-white text-4xl md:text-5xl tracking-tight leading-tight mb-4">
+          Funciona com os<br>
+          <span class="text-gradient">principais engines</span>
+        </h2>
       </div>
 
-      <div class="features-grid">
-        <div class="feature-card">
-          <div class="feature-icon">⚡</div>
-          <h3>Velocidade personalizada</h3>
-          <p>Controle preciso de 0.5x até 10x com slider ou 8 presets rápidos (1x, 1.5x, 2x, 2.5x, 3x, 5x, 7x, 10x)</p>
-        </div>
-
-        <div class="feature-card">
-          <div class="feature-icon">🎯</div>
-          <h3>Auto-Skip de animações</h3>
-          <p>Modo opcional que clica automaticamente no canvas para avançar conteúdo e pular animações longas</p>
-        </div>
-
-        <div class="feature-card">
-          <div class="feature-icon">💾</div>
-          <h3>Salvamento automático</h3>
-          <p>Suas preferências de velocidade são salvas localmente e restauradas a cada sessão</p>
-        </div>
-
-        <div class="feature-card">
-          <div class="feature-icon">🔒</div>
-          <h3>100% privado</h3>
-          <p>Nenhum dado coletado, enviado ou compartilhado. Tudo funciona localmente no seu navegador</p>
-        </div>
-
-        <div class="feature-card">
-          <div class="feature-icon">🪶</div>
-          <h3>Ultra leve</h3>
-          <p>Apenas 27KB. Zero anúncios, zero rastreamento, zero dependências externas</p>
-        </div>
-
-        <div class="feature-card">
-          <div class="feature-icon">🎮</div>
-          <h3>Multi-engine</h3>
-          <p>Detecta automaticamente Cocos, PixiJS, Phaser, Spine e outros engines populares</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Engines -->
-  <section id="engines" class="section section-alt">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-tag">Compatibilidade</div>
-        <h2>Funciona com os principais engines HTML5</h2>
-        <p>Detecção automática e controle direto do timeScale de cada engine</p>
-      </div>
-
-      <div class="engines-grid">
-        <div class="engine-card">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <div class="engine-chip">
           <div class="engine-name">Cocos Creator</div>
           <div class="engine-version">2.x · 3.x</div>
         </div>
-        <div class="engine-card">
+        <div class="engine-chip">
           <div class="engine-name">PixiJS</div>
           <div class="engine-version">Todas versões</div>
         </div>
-        <div class="engine-card">
+        <div class="engine-chip">
           <div class="engine-name">Phaser</div>
           <div class="engine-version">2 · 3</div>
         </div>
-        <div class="engine-card">
+        <div class="engine-chip">
           <div class="engine-name">Spine</div>
-          <div class="engine-version">Animações</div>
+          <div class="engine-version">Animações 2D</div>
         </div>
-        <div class="engine-card">
+        <div class="engine-chip">
           <div class="engine-name">CreateJS</div>
           <div class="engine-version">Ticker</div>
         </div>
-        <div class="engine-card">
+        <div class="engine-chip">
           <div class="engine-name">Three.js</div>
           <div class="engine-version">Clock</div>
         </div>
-        <div class="engine-card">
+        <div class="engine-chip">
           <div class="engine-name">Canvas API</div>
           <div class="engine-version">Nativa</div>
         </div>
-        <div class="engine-card">
+        <div class="engine-chip">
           <div class="engine-name">Outros</div>
-          <div class="engine-version">timeScale automático</div>
+          <div class="engine-version">timeScale auto</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- How it works -->
-  <section id="how" class="section">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-tag">Como usar</div>
-        <h2>Simples em 4 passos</h2>
-        <p>Configure em menos de 30 segundos</p>
+  <!-- ===== HOW IT WORKS ===== -->
+  <section id="how" class="relative z-10 py-32 px-6">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center max-w-2xl mx-auto mb-20">
+        <div class="inline-block px-3 py-1 rounded-full border border-white/10 bg-white/[0.03] text-white/70 text-[10px] font-bold tracking-[0.25em] uppercase mb-4">
+          Como usar
+        </div>
+        <h2 class="font-sans font-bold text-white text-4xl md:text-5xl tracking-tight leading-tight mb-4">
+          Configure em <span class="text-gradient">30 segundos</span>
+        </h2>
       </div>
 
-      <div class="steps">
-        <div class="step">
-          <div class="step-number">1</div>
-          <h3>Instale a extensão</h3>
-          <p>Baixe na Chrome Web Store ou faça instalação manual via modo desenvolvedor</p>
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <div class="step-card">
+          <div class="step-num">01</div>
+          <h3>Instale</h3>
+          <p>Chrome Web Store ou instalação manual via modo desenvolvedor.</p>
         </div>
-
-        <div class="step">
-          <div class="step-number">2</div>
-          <h3>Abra o conteúdo</h3>
-          <p>Navegue até o jogo HTML5 ou página com animações canvas que deseja controlar</p>
+        <div class="step-card">
+          <div class="step-num">02</div>
+          <h3>Abra</h3>
+          <p>Navegue até o jogo ou página com animações canvas.</p>
         </div>
-
-        <div class="step">
-          <div class="step-number">3</div>
-          <h3>Escolha a velocidade</h3>
-          <p>Clique no ícone da extensão e selecione um preset ou ajuste com o slider</p>
+        <div class="step-card">
+          <div class="step-num">03</div>
+          <h3>Escolha</h3>
+          <p>Clique no ícone e selecione a velocidade com slider ou preset.</p>
         </div>
-
-        <div class="step">
-          <div class="step-number">4</div>
-          <h3>Aproveite!</h3>
-          <p>As animações são aceleradas instantaneamente. Clique RESETAR para voltar ao normal</p>
+        <div class="step-card">
+          <div class="step-num">04</div>
+          <h3>Aproveite</h3>
+          <p>Animações aceleram instantaneamente. Clique RESETAR para voltar.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Install -->
-  <section id="install" class="section section-alt">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-tag">Instalação</div>
-        <h2>Pronto para começar?</h2>
-        <p>Escolha a melhor opção para você</p>
+  <!-- ===== INSTALL ===== -->
+  <section id="install" class="relative z-10 py-32 px-6">
+    <div class="max-w-5xl mx-auto">
+      <div class="text-center max-w-2xl mx-auto mb-16">
+        <div class="inline-block px-3 py-1 rounded-full border border-purple-500/20 bg-purple-500/5 text-purple-400 text-[10px] font-bold tracking-[0.25em] uppercase mb-4">
+          Instalação
+        </div>
+        <h2 class="font-sans font-bold text-white text-4xl md:text-5xl tracking-tight leading-tight mb-4">
+          Pronto para <span class="text-gradient">começar?</span>
+        </h2>
       </div>
 
-      <div class="install-options">
-        <div class="install-card featured">
-          <div class="install-badge">Recomendado</div>
-          <div class="install-icon">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+        <div class="install-panel featured">
+          <div class="install-badge">RECOMENDADO</div>
+          <div class="install-icon-wrap gradient-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L10 14v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
           </div>
           <h3>Chrome Web Store</h3>
-          <p>Instalação oficial com atualizações automáticas. Aguardando aprovação do Google.</p>
-          <a href="#" class="btn-primary disabled">Em breve</a>
+          <p>Instalação oficial com atualizações automáticas.</p>
+          <span class="btn-pill-disabled">EM BREVE</span>
         </div>
 
-        <div class="install-card">
-          <div class="install-icon">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+        <div class="install-panel">
+          <div class="install-icon-wrap">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
           </div>
-          <h3>GitHub (Modo desenvolvedor)</h3>
-          <p>Baixe o ZIP e instale manualmente via chrome://extensions em "Modo do desenvolvedor"</p>
-          <a href="https://github.com/MarcBuzatto/canvas-speed-controller" target="_blank" class="btn-secondary">Ver no GitHub</a>
+          <h3>GitHub</h3>
+          <p>Baixe o ZIP e instale manualmente via modo desenvolvedor.</p>
+          <a href="https://github.com/MarcBuzatto/canvas-speed-controller-plus" target="_blank" rel="noopener" class="btn-pill-outline">
+            VER NO GITHUB
+          </a>
         </div>
       </div>
 
-      <div class="install-instructions">
-        <h3>Instalação manual (Modo desenvolvedor)</h3>
-        <ol>
-          <li>Baixe o arquivo <code>.zip</code> da extensão no GitHub</li>
-          <li>Extraia em uma pasta do seu computador</li>
-          <li>Abra <code>chrome://extensions/</code> no Chrome</li>
-          <li>Ative o "Modo do desenvolvedor" (canto superior direito)</li>
-          <li>Clique em "Carregar sem compactação" e selecione a pasta extraída</li>
-          <li>Pronto! O ícone aparece na barra de extensões</li>
+      <!-- Instructions panel -->
+      <div class="glass-card p-8 md:p-10">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-10 h-10 rounded-full bg-gradient-to-r from-purple-500/20 to-cyan-500/20 border border-white/10 flex items-center justify-center">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          </div>
+          <h3 class="font-bold text-white text-lg">Instalação Manual (Modo Desenvolvedor)</h3>
+        </div>
+        <ol class="space-y-3 text-sm text-white/70">
+          <li class="flex gap-3"><span class="step-dot">1</span> Baixe o arquivo <code class="code-inline">.zip</code> da extensão no GitHub</li>
+          <li class="flex gap-3"><span class="step-dot">2</span> Extraia em uma pasta do seu computador</li>
+          <li class="flex gap-3"><span class="step-dot">3</span> Abra <code class="code-inline">chrome://extensions/</code> no Chrome</li>
+          <li class="flex gap-3"><span class="step-dot">4</span> Ative o <strong class="text-white">Modo do desenvolvedor</strong> (canto superior direito)</li>
+          <li class="flex gap-3"><span class="step-dot">5</span> Clique em <strong class="text-white">Carregar sem compactação</strong> e selecione a pasta</li>
+          <li class="flex gap-3"><span class="step-dot">6</span> Pronto! O ícone aparece na barra de extensões</li>
         </ol>
       </div>
     </div>
   </section>
 
-  <!-- Privacy -->
-  <section class="section">
-    <div class="container">
-      <div class="privacy-box">
-        <div class="privacy-icon">🔐</div>
-        <h2>Sua privacidade em primeiro lugar</h2>
-        <p>
-          A extensão não coleta, armazena ou transmite nenhum dado pessoal. Toda a funcionalidade roda 100% localmente no seu navegador. Sem rastreamento, sem análises, sem servidores externos.
-        </p>
-        <div class="privacy-points">
-          <div class="privacy-point">✓ Zero coleta de dados</div>
-          <div class="privacy-point">✓ Zero rastreamento</div>
-          <div class="privacy-point">✓ Zero servidores externos</div>
-          <div class="privacy-point">✓ Código aberto para auditoria</div>
+  <!-- ===== PRIVACY CTA ===== -->
+  <section class="relative z-10 py-24 px-6">
+    <div class="max-w-4xl mx-auto">
+      <div class="privacy-showcase">
+        <div class="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-transparent to-cyan-500/5 pointer-events-none rounded-3xl"></div>
+        <div class="relative">
+          <div class="flex items-center justify-center mb-6">
+            <div class="w-14 h-14 rounded-full bg-gradient-to-r from-purple-500/20 to-cyan-500/20 border border-white/10 flex items-center justify-center">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-cyan-400"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            </div>
+          </div>
+          <h2 class="text-3xl md:text-4xl font-bold text-white text-center mb-4">
+            Privacidade <span class="text-gradient">em primeiro lugar</span>
+          </h2>
+          <p class="text-white/50 text-sm md:text-base text-center max-w-xl mx-auto mb-10 font-light leading-relaxed">
+            A extensão não coleta, armazena ou transmite nenhum dado pessoal.
+            Toda funcionalidade roda 100% localmente no seu navegador.
+          </p>
+          <div class="grid grid-cols-2 gap-3 max-w-lg mx-auto mb-10">
+            <div class="privacy-check">Zero coleta de dados</div>
+            <div class="privacy-check">Zero rastreamento</div>
+            <div class="privacy-check">Zero servidores externos</div>
+            <div class="privacy-check">Código aberto</div>
+          </div>
+          <div class="flex justify-center">
+            <a href="./privacy.html" class="btn-pill-outline">LER POLÍTICA COMPLETA</a>
+          </div>
         </div>
-        <a href="./privacy.html" class="btn-secondary">Ler política completa</a>
       </div>
     </div>
   </section>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-brand">
-          <img src="./assets/logo.png" alt="Logo" class="footer-logo">
-          <h3>Canvas Speed Controller Plus</h3>
-          <p>Controle a velocidade de animações HTML5 diretamente no navegador</p>
+  <!-- ===== FOOTER ===== -->
+  <footer class="relative z-10 border-t border-white/[0.06] px-6 pt-16 pb-8 mt-20">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+        <div class="md:col-span-2">
+          <div class="flex items-center gap-3 mb-4">
+            <img src="./assets/logo.png" alt="Canvas Speed" class="w-10 h-10 rounded-lg" />
+            <span class="font-logo text-sm font-bold text-white tracking-[0.25em]">CANVAS SPEED</span>
+          </div>
+          <p class="text-white/40 text-sm font-light max-w-sm leading-relaxed">
+            Controle a velocidade de animações em jogos HTML5 e conteúdo canvas diretamente no seu navegador.
+          </p>
         </div>
 
-        <div class="footer-col">
-          <h4>Links</h4>
-          <a href="#features">Recursos</a>
-          <a href="#engines">Compatibilidade</a>
-          <a href="#how">Como usar</a>
-          <a href="#install">Instalação</a>
+        <div>
+          <h4 class="text-[10px] font-bold text-white/90 tracking-[0.25em] uppercase mb-4">Produto</h4>
+          <div class="space-y-2">
+            <a href="#features" class="footer-link">Recursos</a>
+            <a href="#engines" class="footer-link">Engines</a>
+            <a href="#how" class="footer-link">Como usar</a>
+            <a href="#install" class="footer-link">Instalação</a>
+          </div>
         </div>
 
-        <div class="footer-col">
-          <h4>Suporte</h4>
-          <a href="https://discord.gg/b9ZJrypBra" target="_blank">Discord</a>
-          <a href="https://github.com/MarcBuzatto/canvas-speed-controller" target="_blank">GitHub</a>
-          <a href="./privacy.html">Política de Privacidade</a>
+        <div>
+          <h4 class="text-[10px] font-bold text-white/90 tracking-[0.25em] uppercase mb-4">Suporte</h4>
+          <div class="space-y-2">
+            <a href="https://discord.gg/b9ZJrypBra" target="_blank" rel="noopener" class="footer-link">Discord</a>
+            <a href="https://github.com/MarcBuzatto/canvas-speed-controller-plus" target="_blank" rel="noopener" class="footer-link">GitHub</a>
+            <a href="./privacy.html" class="footer-link">Privacidade</a>
+          </div>
         </div>
+      </div>
 
-        <div class="footer-col">
-          <h4>Desenvolvido por</h4>
-          <p class="dev-name">markizin</p>
-          <p class="footer-small">© 2026 · Todos os direitos reservados</p>
-        </div>
+      <div class="border-t border-white/[0.06] pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+        <p class="text-white/30 text-xs tracking-wider">
+          DESENVOLVIDO POR <span class="text-gradient font-bold">MARKIZIN</span>
+        </p>
+        <p class="text-white/30 text-xs">© 2026 Canvas Speed · Todos os direitos reservados</p>
       </div>
     </div>
   </footer>
 
 </body>
+
 </html>
