@@ -66,7 +66,7 @@
     </div>
 
     <h1>Política de <span class="text-gradient">Privacidade</span></h1>
-    <p class="date">ÚLTIMA ATUALIZAÇÃO · 19 DE ABRIL DE 2026</p>
+    <p class="date">ÚLTIMA ATUALIZAÇÃO · 20 DE NOVEMBRO DE 2026</p>
 
     <h2>Resumo</h2>
     <p>
@@ -89,8 +89,10 @@
       A extensão salva <strong>APENAS</strong> as seguintes preferências localmente (via <code>chrome.storage.local</code>) no navegador do próprio usuário:
     </p>
     <ul>
-      <li>Velocidade de animação escolhida (ex: 1x, 2x, 3x)</li>
-      <li>Estado do toggle de auto-skip (ativado/desativado)</li>
+      <li>Velocidade de animação escolhida (ex: 1x, 2x, 3x), por site</li>
+      <li>Estado e configuração do auto-skip (intervalo e ponto de clique) e do painel flutuante, por site</li>
+      <li>Seus presets de velocidade personalizados</li>
+      <li>O endereço (host) dos sites em que você alterou alguma configuração, usado apenas como chave dessas preferências</li>
     </ul>
     <p>
       Esses dados <strong>NUNCA</strong> são enviados para servidores externos, terceiros ou qualquer outro lugar fora do dispositivo do usuário. O usuário pode apagá-los a qualquer momento removendo a extensão.
@@ -101,6 +103,7 @@
       <li><strong>activeTab:</strong> Necessária para injetar o script de controle de velocidade na aba ativa quando o usuário clica na extensão.</li>
       <li><strong>scripting:</strong> Usada para injetar o código de controle de velocidade no contexto da página.</li>
       <li><strong>storage:</strong> Usada para salvar localmente a preferência de velocidade do usuário entre sessões.</li>
+      <li><strong>tabs / webNavigation:</strong> Usadas para saber o site da aba e reaplicar a configuração quando o jogo recarrega ou troca de iframe.</li>
       <li><strong>host_permissions (&lt;all_urls&gt;):</strong> Necessária pois o usuário pode querer controlar a velocidade de animações em qualquer site com conteúdo HTML5/canvas.</li>
     </ul>
 
